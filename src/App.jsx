@@ -3,6 +3,7 @@ import { signOut } from "firebase/auth"
 import { auth } from "../firebase.js"
 import Search from "./components/Search"
 import Movie from "./components/Movie"
+import Chat from "./components/Chat"
 
 const API_BASE_URL = 'https://api.themoviedb.org/3'
 
@@ -13,6 +14,7 @@ const App = () => {
   const [searchQuery, setSearchQuery] = useState("")
   const [movies, setMovies] = useState([])
   const [errorMessage, setErrorMessage] = useState("")
+  const [currentMovie, setCurrentMovie] = useState(null)
 
   const fetchMovies = async (query) => {
     try {
@@ -70,8 +72,12 @@ const App = () => {
 
       <section>
         <ul className="movie-list">
-          {movies.map((movie, index)=>(
-            <Movie id={index} movie={movie}/>
+          {movies.map((movie)=>(
+            currentMovie && currentMovie.id === movie.id ? (
+              <Chat key={movie.id} movie={movie} onClick={()=>setCurrentMovie(null)} />
+            ) : (
+              <Movie key={movie.id} movie={movie} onClick={()=>setCurrentMovie(movie)}/>
+            )
           ))}
         </ul>
         {errorMessage? <p>{errorMessage}</p> : null}
