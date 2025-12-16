@@ -4,15 +4,8 @@ import Movie from "./components/Movie"
 
 const API_BASE_URL = 'https://api.themoviedb.org/3'
 
-const API_KEY = import.meta.env.VITE_TMDB_API_TOKEN
+const API_KEY = import.meta.env.VITE_API_KEY
 
-const API_OPTIONS = {
-  method: 'GET',
-  headers: {
-    accept: 'application/json',
-    Authorization: `Bearer ${API_KEY}`
-  } 
-}
 
 const App = () => {
   const [movies, setMovies] = useState([])
@@ -20,7 +13,7 @@ const App = () => {
 
   const fetchMovies = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/discover/movie?sort_by=popularity.desc`, API_OPTIONS)
+      const res = await fetch(`${API_BASE_URL}/discover/movie?sort_by=popularity.desc&api_key=${API_KEY}`)
 
       if(!res.ok){
         //error
@@ -48,7 +41,6 @@ const App = () => {
       </header>
 
       <section>
-        <h2>all movies</h2>
         <ul className="movie-list">
           {movies.map((movie, index)=>(
             <Movie id={index} movie={movie}/>
