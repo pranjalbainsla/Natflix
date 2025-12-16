@@ -9,21 +9,24 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background-image: url('/images/bg5.jpeg');
-  background-size: cover;      /* fills screen */
-  background-position: center; /* keeps focus */
-  background-repeat: no-repeat;
 }
 
-/* On phones, avoid heavy zoom and tile the image vertically */
-@media (max-width: 600px) {
-  body {
-    /* Make the image span full width, keep aspect ratio, and repeat as you scroll */
-    background-size: 100% auto;
-    background-position: top center;
-    background-repeat: repeat-y;
-    background-color: black;
-  }
+/* Background for main app (after login): tile vertically, width = viewport width */
+body.app-bg {
+  background-image: url('/images/bg5.jpeg');
+  background-size: 100% auto;      /* image spans full viewport width */
+  background-position: top center;
+  background-repeat: repeat-y;     /* repeat as we scroll down */
+  background-color: black;
+}
+
+/* Background for login page: single hero image, no repeat */
+body.login-bg {
+  background-image: url('/images/bg5.jpeg');
+  background-size: cover;          /* fills the viewport, keeps aspect ratio */
+  background-position: center;     /* keeps focus */
+  background-repeat: no-repeat;    /* no tiling */
+  background-color: black;
 }
 
 main {
@@ -56,6 +59,12 @@ header {
   text-align: center;
   line-height: 1.2;
   padding: 0 1rem;
+}
+@media (max-width: 450px) {
+  .header {
+    font-size: 7vw;
+    line-height: 1;
+  }
 }
 
 footer {

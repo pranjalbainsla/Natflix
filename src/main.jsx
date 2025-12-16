@@ -19,6 +19,22 @@ const Root = () => {
     return () => unsubscribe();
   }, []);
 
+  // Toggle body background based on auth state (login page vs main app)
+  useEffect(() => {
+    if (user) {
+      document.body.classList.add('app-bg');
+      document.body.classList.remove('login-bg');
+    } else {
+      document.body.classList.add('login-bg');
+      document.body.classList.remove('app-bg');
+    }
+
+    return () => {
+      document.body.classList.remove('app-bg');
+      document.body.classList.remove('login-bg');
+    };
+  }, [user]);
+
   if (loading) {
     return (
       <div className="loading-container">
