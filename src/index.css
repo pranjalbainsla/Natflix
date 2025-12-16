@@ -102,9 +102,32 @@ input:focus {
   margin: 40px 0;
   justify-self: center;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 220px);
   gap: 15px;
+  justify-content: center;
 }
+
+/* Big tablets: 3 columns */
+@media (max-width: 1024px) {
+  .movie-list {
+    grid-template-columns: repeat(3, 220px);
+  }
+}
+
+/* Small tablets: 2 columns */
+@media (max-width: 768px) {
+  .movie-list {
+    grid-template-columns: repeat(2, 220px);
+  }
+}
+
+/* Phones: 1 column */
+@media (max-width: 480px) {
+  .movie-list {
+    grid-template-columns: repeat(1, 220px);
+  }
+}
+
 .movie-card {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
@@ -115,7 +138,8 @@ input:focus {
   backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
-  height: 100%;
+  width: 220px;
+  height: 400px;
 }
 
 .movie-card:hover {
@@ -135,12 +159,12 @@ input:focus {
   padding: 12px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 2px;
   flex-grow: 1;
 }
 
 .movie-title {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   color: white;
   line-height: 1.3;
@@ -153,6 +177,7 @@ input:focus {
 }
 
 .movie-info {
+  margin-bottom: 1px;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -175,13 +200,14 @@ input:focus {
   border-radius: 12px;
   background-color: rgba(39, 38, 38, 0.8);
   overflow: hidden;
-  cursor: pointer;
+  cursor: default;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
-  height: 100%;
-  padding: 16px;
+  width: 220px;
+  height: 380px;
+  padding: 0;
 }
 
 .chat-card:hover {
@@ -190,11 +216,174 @@ input:focus {
   border-color: rgba(255, 255, 255, 0.3);
 }
 
-.chat-card p {
+.chat-content {
+  padding: 16px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.chat-content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.movie-overview {
   color: rgba(255, 255, 255, 0.9);
   font-size: 10px;
   line-height: 1.6;
+  margin: 0 0 20px 0;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  position: relative;
+}
+
+.movie-overview::after {
+  content: "Expand";
+  position: absolute;
+  right: 0;
+  bottom: -15px;
+  font-size: 9px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.movie-overview.expanded::after {
+  content: "Hide";
+}
+
+
+.comments-section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.comments-title {
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  margin: -8px 0 5px 0;
+}
+
+.comments-list {
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.comments-list::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.no-comments {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 10px;
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+}
+
+.comment-item {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+.comment-item.user-comment {
+  background-color: rgba(108, 108, 177, 0.3);
+  border: 1px solid rgba(108, 108, 177, 0.4);
+  text-align: right;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.comment-header.user-author {
+  justify-content: flex-end;
+}
+
+.comment-author {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 8px;
+  font-weight: 600;
+}
+
+.comment-text {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 10px;
+  line-height: 1.2;
   margin: 0;
+}
+
+.comment-form {
+  display: flex;
+  justify-content: space-between;
+  gap: 3px;
+  margin-bottom: -5px;
+  margin-left: -5px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.comment-input {
+  flex: 1;
+  padding: 4px 6px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  color: white;
+  font-size: 10px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.comment-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.comment-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.comment-submit {
+  padding: 6px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 16px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+}
+
+.comment-submit:hover:not(:disabled) {
+  background-color: rgba(108, 108, 177, 1);
+  transform: translateY(-1px);
+}
+
+.comment-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.submit-icon {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
 }
 
 /* Login Page Styles */

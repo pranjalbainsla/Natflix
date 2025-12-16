@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { signOut } from "firebase/auth"
+import { signOut, onAuthStateChanged } from "firebase/auth"
 import { auth } from "../firebase.js"
 import Search from "./components/Search"
 import Movie from "./components/Movie"
@@ -15,6 +15,7 @@ const App = () => {
   const [movies, setMovies] = useState([])
   const [errorMessage, setErrorMessage] = useState("")
   const [currentMovie, setCurrentMovie] = useState(null)
+  const [user, setUser] = useState(null)
 
   const fetchMovies = async (query) => {
     try {
@@ -60,11 +61,19 @@ const App = () => {
      fetchMovies(searchQuery)  
   }, [searchQuery])
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe();
+  }, [])
+
   return (
     <main>
       <header>
         <div className="header-container">
-          <div className="header">Find <span className="purple-gradient">Movies</span> You'll Enjoy Without The Hassle</div>
+          <div className="header">Hi chat, what are we <span className="purple-gradient">watching?</span></div>
           
         </div>
         <Search onSend={handleSearch} /> 
@@ -74,7 +83,7 @@ const App = () => {
         <ul className="movie-list">
           {movies.map((movie)=>(
             currentMovie && currentMovie.id === movie.id ? (
-              <Chat key={movie.id} movie={movie} onClick={()=>setCurrentMovie(null)} />
+              <Chat key={movie.id} movie={movie} user={user} onClick={()=>setCurrentMovie(null)} />
             ) : (
               <Movie key={movie.id} movie={movie} onClick={()=>setCurrentMovie(movie)}/>
             )
