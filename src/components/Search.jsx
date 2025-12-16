@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import searchIcon from "../assets/search.svg";
 
-const Search = () => {
+const Search = ( { onSend }) => {
     const [searchInput, setSearchInput] = useState("")
 
     return (
@@ -12,10 +12,15 @@ const Search = () => {
                 placeholder="type something here..."
                 value={searchInput}
                 onChange={(e)=>setSearchInput(e.target.value)}
+                onKeyDown={(e)=> {
+                    if (e.key === 'Enter') {
+                        onSend(searchInput);
+                    }
+                }}
                 className="input-box"
                 autoFocus
             />
-            <button type="submit" className="search-button"><img src={searchIcon} /></button>
+            <button className="search-button" onClick={()=>onSend(searchInput)}><img src={searchIcon} /></button>
           
         </div>
     )

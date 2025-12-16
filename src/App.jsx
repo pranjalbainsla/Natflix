@@ -8,12 +8,18 @@ const API_KEY = import.meta.env.VITE_API_KEY
 
 
 const App = () => {
+  const [searchQuery, setSearchQuery] = useState("")
   const [movies, setMovies] = useState([])
   const [errorMessage, setErrorMessage] = useState("")
 
-  const fetchMovies = async () => {
+  const fetchMovies = async (query) => {
     try {
-      const res = await fetch(`${API_BASE_URL}/discover/movie?sort_by=popularity.desc&api_key=${API_KEY}`)
+      let res;
+      if(query==null || query===""){
+        res = await fetch(`${API_BASE_URL}/discover/movie?sort_by=popularity.desc&api_key=${API_KEY}`)
+      } else {
+        res = await fetch(`${API_BASE_URL}/search/movie?query=${query}&api_key=${API_KEY}`)
+      }
 
       if(!res.ok){
         //error
@@ -30,14 +36,22 @@ const App = () => {
       setErrorMessage("Error loading movies!")
     }
   }
+  const handleSearch = (query) => {
+    setSearchQuery(query)
+    console.log(`user searched for ${query}`)
+  }
   useEffect(()=>{
     fetchMovies();
   }, [])
+  useEffect(()=>{
+     fetchMovies(searchQuery)  
+  }, [searchQuery])
+
   return (
     <main>
       <header>
         <div className="header">Find <span className="purple-gradient">Movies</span> You'll Enjoy Without The Hassle</div>
-        <Search /> 
+        <Search onSend={handleSearch} /> 
       </header>
 
       <section>
