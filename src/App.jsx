@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react"
+import { signOut } from "firebase/auth"
+import { auth } from "../firebase.js"
 import Search from "./components/Search"
 import Movie from "./components/Movie"
 
@@ -40,6 +42,15 @@ const App = () => {
     setSearchQuery(query)
     console.log(`user searched for ${query}`)
   }
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth)
+    } catch (error) {
+      console.error('Error signing out:', error)
+      alert('Failed to sign out. Please try again.')
+    }
+  }
   useEffect(()=>{
     fetchMovies();
   }, [])
@@ -50,7 +61,10 @@ const App = () => {
   return (
     <main>
       <header>
-        <div className="header">Find <span className="purple-gradient">Movies</span> You'll Enjoy Without The Hassle</div>
+        <div className="header-container">
+          <div className="header">Find <span className="purple-gradient">Movies</span> You'll Enjoy Without The Hassle</div>
+          
+        </div>
         <Search onSend={handleSearch} /> 
       </header>
 
@@ -62,6 +76,9 @@ const App = () => {
         </ul>
         {errorMessage? <p>{errorMessage}</p> : null}
       </section>
+      <footer>
+        <div className="footer-container"><button onClick={handleSignOut} className="sign-out-button">Sign Out</button></div>
+      </footer>
       
     </main>
   )
