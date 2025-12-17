@@ -18,7 +18,6 @@ const Search = ( { onSend }) => {
                     }
                 }}
                 className="input-box"
-                autoFocus
             />
             <button className="search-button" onClick={()=>onSend(searchInput)}><img src={searchIcon} /></button>
           

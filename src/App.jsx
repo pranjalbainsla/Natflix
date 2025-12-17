@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import { signOut, onAuthStateChanged } from "firebase/auth"
 import { auth } from "../firebase.js"
 import Search from "./components/Search"
@@ -18,7 +18,7 @@ const App = () => {
   const [user, setUser] = useState(null)
 
   // Auto sign-out after a period of inactivity (in ms)
-  const AUTO_SIGN_OUT_MS = 1 * 60 * 1000 // 30 minutes
+  const INACTIVITY_LIMIT = 1 * 60 * 1000 // 30 minutes
 
   const fetchMovies = async (query) => {
     try {
@@ -73,9 +73,58 @@ const App = () => {
     return () => unsubscribe();
   }, [])
 
+  function useAutoLogout() {
+    const timerRef = useRef(null);
+  
+    const resetTimer = () => {
+      clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => {
+         signOut(auth)
+      }, 5*60*1000);
+    };
+  
+    useEffect(() => {
+      const events = [
+        "mousemove",
+        "mousedown",
+        "keydown",
+        "scroll",
+        "touchstart",
+        "visibilitychange",
+      ];
+  
+      const handleVisibility = () => {
+        if (document.visibilityState === "visible") {
+          resetTimer();
+        }
+      };
+  
+      events.forEach((e) => window.addEventListener(e, resetTimer));
+      document.addEventListener("visibilitychange", handleVisibility);
+  
+      resetTimer(); // start timer on mount
+  
+      return () => {
+        events.forEach((e) => window.removeEventListener(e, resetTimer));
+        document.removeEventListener("visibilitychange", handleVisibility);
+        clearTimeout(timerRef.current);
+      };
+    }, []);
+  }
+  useAutoLogout();
+
   return (
     <main>
       <header>
+      <section className="sign-out">
+        <div className="footer-container">
+          <button onClick={handleSignOut} className="sign-out-button">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+          </svg>
+          </button>
+        </div>
+      </section>
         <div className="header-container">
           <div className="header">Hi chat, what are we <span className="purple-gradient">watching?</span></div>
           
@@ -96,9 +145,7 @@ const App = () => {
         </ul>
         
       </section>
-      <footer>
-        <div className="footer-container"><button onClick={handleSignOut} className="sign-out-button">Sign Out</button></div>
-      </footer>
+      
       
     </main>
   )
