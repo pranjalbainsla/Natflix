@@ -5,9 +5,9 @@ import Search from "./components/Search"
 import Movie from "./components/Movie"
 import Chat from "./components/Chat"
 
-const API_BASE_URL = 'https://api.themoviedb.org/3'
+const API_BASE_URL = 'https://getmovies-cxzephsa4a-uc.a.run.app'
 
-const API_KEY = import.meta.env.VITE_API_KEY
+
 
 
 const App = () => {
@@ -17,14 +17,16 @@ const App = () => {
   const [currentMovie, setCurrentMovie] = useState(null)
   const [user, setUser] = useState(null)
 
+  // Auto sign-out after a period of inactivity (in ms)
+  const AUTO_SIGN_OUT_MS = 1 * 60 * 1000 // 30 minutes
+
   const fetchMovies = async (query) => {
     try {
-      let res;
-      if(query==null || query===""){
-        res = await fetch(`${API_BASE_URL}/discover/movie?sort_by=popularity.desc&api_key=${API_KEY}`)
-      } else {
-        res = await fetch(`${API_BASE_URL}/search/movie?query=${query}&api_key=${API_KEY}`)
-      }
+      const url = query
+      ? `${API_BASE_URL}/getMovies?query=${encodeURIComponent(query)}`
+      : `${API_BASE_URL}/getMovies`;
+
+      const res = await fetch(url)
 
       if(!res.ok){
         //error
@@ -32,18 +34,20 @@ const App = () => {
       }
 
       const data = await res.json()
-      console.log(data)
 
       setMovies(data.results)
 
     } catch (error) {
-      console.log(error.message)
-      setErrorMessage("Error loading movies!")
+      if (!navigator.onLine) {
+        setErrorMessage("You're offline. Check your internet connection.");
+      } else {
+        setErrorMessage("Error loading movies!");
+      }
     }
   }
   const handleSearch = (query) => {
     setSearchQuery(query)
-    console.log(`user searched for ${query}`)
+
   }
 
   const handleSignOut = async () => {
@@ -79,7 +83,8 @@ const App = () => {
         <Search onSend={handleSearch} /> 
       </header>
 
-      <section>
+      <section className="body-content">
+      <div className="error-message">{errorMessage? <p style={{ color: 'grey'}}>{errorMessage}</p> : null}</div>
         <ul className="movie-list">
           {movies.map((movie)=>(
             currentMovie && currentMovie.id === movie.id ? (
@@ -89,7 +94,7 @@ const App = () => {
             )
           ))}
         </ul>
-        {errorMessage? <p>{errorMessage}</p> : null}
+        
       </section>
       <footer>
         <div className="footer-container"><button onClick={handleSignOut} className="sign-out-button">Sign Out</button></div>
