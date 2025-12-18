@@ -36,7 +36,7 @@ main {
   width: 100%;
   min-height: 100vh;
 }
-header {
+.new-header {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -67,23 +67,22 @@ header {
     line-height: 1;
   }
 }
-.sign-out {
+header {
+  width: 100%;
+  position: sticky;
+  top: 0;
   display: flex;
-  justify-content: flex-end;
-  padding-right: clamp(1rem, 2vw, 1.875rem);
+  justify-content: space-between;
+  padding: clamp(0.5rem, 0.8vh, 1rem) clamp(1rem, 2vw, 1.875rem);
+  z-index: 2;
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
 }
-.footer-container {
-  margin-top: clamp(1rem, 3vh, 1.875rem);
-}
-.footer-container button {
-  border-radius: 2rem;
-}
-
 .sign-out-button {
   padding: clamp(0.5rem, 1.5vh, 0.625rem) clamp(1rem, 2vw, 1.25rem);
   background-color: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 0.5rem;
+  border-radius: 2rem;
   color: white;
   font-size: clamp(0.875rem, 1.8vw, 1rem);
   font-weight: 600;

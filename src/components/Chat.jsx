@@ -52,19 +52,14 @@ const Chat = ({ movie, user, onClick }) => {
     };
 
     return (
-        <div className="chat-card" onClick={(e) => {
-            // Only close if clicking outside the interactive area
-            if (e.target === e.currentTarget || e.target.classList.contains('chat-card')) {
-                onClick();
-            }
-        }}>
+        <div className="chat-card">
             <div className="chat-content" onClick={(e) => e.stopPropagation()}>
                 <p className={`movie-overview ${expand === 1 ? "expanded" : ""}`} onClick={()=>setExpand(prev => 1-prev)}>{expand === 1 ? (
                     movie.overview ) : ( movie.overview.split(" ").slice(0, 4).join(" ") + "..."
 
                 )}</p>
                 
-                <div className="comments-section">
+                <div className="comments-section" onClick={onClick}>
                     <h3 className="comments-title">Comments</h3>
                     <div className="comments-list">
                         {comments.length === 0 ? (
