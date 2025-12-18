@@ -75,9 +75,9 @@ header {
   justify-content: space-between;
   padding: clamp(0.5rem, 0.8vh, 1rem) clamp(1rem, 2vw, 1.875rem);
   z-index: 2;
-  background:  rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
+  background: rgba(0, 0, 0, 0.55);  /* ↑ THIS matters more than blur */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 .sign-out-button {
   padding: clamp(0.5rem, 1.5vh, 0.625rem) clamp(1rem, 2vw, 1.25rem);
