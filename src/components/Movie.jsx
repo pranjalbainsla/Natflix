@@ -8,7 +8,7 @@ const Movie = ({ movie : { title, poster_path, release_date, vote_average, origi
             <div>
                 <div className="movie-title">{title}</div>
                 <div className="movie-info">
-                    <img src={heartIcon} />
+                    <img src={heartIcon} alt="heart icon" />
                     <span className="rating">{vote_average ? vote_average.toFixed(1) : 'N/A'}</span>
                     <span>•</span>
                     <span>{original_language ? original_language : 'N/A'}</span>

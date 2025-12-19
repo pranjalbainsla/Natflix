@@ -19,7 +19,7 @@ const Search = ( { onSend }) => {
                 }}
                 className="input-box"
             />
-            <button className="search-button" onClick={()=>onSend(searchInput)}><img src={searchIcon} /></button>
+            <button aria-label="search-button" className="search-button" onClick={()=>onSend(searchInput)}><img src={searchIcon} alt="search icon" /></button>
           
         </div>
     )
