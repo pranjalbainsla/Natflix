@@ -1,10 +1,20 @@
 import React from "react";
 import heartIcon from "../assets/heart.svg";
 
-const Movie = ({ movie : { title, poster_path, release_date, vote_average, original_language }, onClick }) => {
+const Movie = ({ movie : { title, poster_path, release_date, vote_average, original_language }, onClick, isLCP }) => {
     return (
         <div className="movie-card" onClick={onClick}>
-            <img src={`https://image.tmdb.org/t/p/w500/${poster_path}`} alt='poster missing'/>
+            <img 
+                src={`https://image.tmdb.org/t/p/w342/${poster_path}`} 
+                srcSet={`
+                    https://image.tmdb.org/t/p/w185${poster_path} 185w,
+                    https://image.tmdb.org/t/p/w342${poster_path} 342w
+                  `}
+                sizes="(max-width: 640px) 185px, 342px"
+                alt='poster missing'
+                loading={isLCP ? "eager" : "lazy"}
+                fetchPriority={isLCP ? "high" : "auto"}
+            />
             <div>
                 <div className="movie-title">{title}</div>
                 <div className="movie-info">

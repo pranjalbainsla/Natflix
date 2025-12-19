@@ -19,15 +19,25 @@ body.app-bg {
   background-repeat: repeat-y;     /* repeat as we scroll down */
   background-color: black;
 }
-
-/* Background for login page: single hero image, no repeat */
 body.login-bg {
   background-image: url('/images/bg5.jpeg');
-  background-size: cover;          /* fills the viewport, keeps aspect ratio */
-  background-position: center;     /* keeps focus */
-  background-repeat: no-repeat;    /* no tiling */
+  background-size: 100% auto;      /* image spans full viewport width */
+  background-position: top center;
+  background-repeat: repeat-y;     /* repeat as we scroll down */
   background-color: black;
 }
+/* Background for login page: single hero image, no repeat */
+@media (max-width: 450px) {
+  body.login-bg {
+    background-image: url('/images/bg5.jpeg');
+    background-size: cover;          /* fills the viewport, keeps aspect ratio */
+    background-position: center;     /* keeps focus */
+    background-repeat: no-repeat;    /* no tiling */
+    background-color: black;
+  }
+}
+
+
 
 main {
   display: flex;
@@ -218,6 +228,7 @@ section {
   height: auto;
   object-fit: cover;
   display: block;
+  aspect-ratio: 2 / 3;
 }
 
 .movie-card > div {

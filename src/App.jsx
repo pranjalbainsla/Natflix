@@ -135,11 +135,11 @@ const App = () => {
       <section className="body-content">
         <div className="error-message">{errorMessage? <p style={{ color: 'grey'}}>{errorMessage}</p> : null}</div>
         <ul className="movie-list">
-          {movies.map((movie)=>(
+          {movies.map((movie, index)=>(
             currentMovie && currentMovie.id === movie.id ? (
               <Chat key={movie.id} movie={movie} user={user} onClick={()=>setCurrentMovie(null)} />
             ) : (
-              <Movie key={movie.id} movie={movie} onClick={()=>setCurrentMovie(movie)}/>
+              <Movie key={movie.id} movie={movie} onClick={()=>setCurrentMovie(movie)} isLCP={index===0}/>
             )
           ))}
         </ul>
