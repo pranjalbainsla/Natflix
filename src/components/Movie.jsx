@@ -4,7 +4,7 @@ import heartIcon from "../assets/heart.svg";
 const Movie = ({ movie : { title, poster_path, release_date, vote_average, original_language }, onClick }) => {
     return (
         <div className="movie-card" onClick={onClick}>
-            <img src={`https://image.tmdb.org/t/p/w500/${poster_path}`} alt='poster missing' loading="lazy"/>
+            <img src={`https://image.tmdb.org/t/p/w500/${poster_path}`} alt='poster missing'/>
             <div>
                 <div className="movie-title">{title}</div>
                 <div className="movie-info">
