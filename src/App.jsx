@@ -17,8 +17,6 @@ const App = () => {
   const [currentMovie, setCurrentMovie] = useState(null)
   const [user, setUser] = useState(null)
 
-  // Auto sign-out after a period of inactivity (in ms)
-  const INACTIVITY_LIMIT = 1 * 60 * 1000 // 30 minutes
 
   const fetchMovies = async (query) => {
     try {
