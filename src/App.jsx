@@ -37,6 +37,9 @@ const App = () => {
       if(data.results.length === 0){
         setErrorMessage("Uh-oh, no movies found!")
       }
+      else{
+        setErrorMessage(null)
+      }
 
     } catch (error) {
       if (!navigator.onLine) {
