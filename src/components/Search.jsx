@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import searchIcon from "../assets/search.svg";
 
-const Search = ( { onSend }) => {
-    const [searchInput, setSearchInput] = useState("")
+const Search = ( { onSend, searchQuery, setSearchQuery }) => {
+    //const [searchInput, setSearchInput] = useState("")
 
     return (
         <div className="search-box">
@@ -10,16 +10,16 @@ const Search = ( { onSend }) => {
             <input 
                 type="text"
                 placeholder="type something here..."
-                value={searchInput}
-                onChange={(e)=>setSearchInput(e.target.value)}
+                value={searchQuery}
+                onChange={(e)=>setSearchQuery(e.target.value)}
                 onKeyDown={(e)=> {
                     if (e.key === 'Enter') {
-                        onSend(searchInput);
+                        onSend(searchQuery);
                     }
                 }}
                 className="input-box"
             />
-            <button aria-label="search-button" className="search-button" onClick={()=>onSend(searchInput)}><img src={searchIcon} alt="search icon" /></button>
+            <button aria-label="search-button" className="search-button" onClick={()=>onSend(searchQuery)}><img src={searchIcon} alt="search icon" /></button>
           
         </div>
     )
