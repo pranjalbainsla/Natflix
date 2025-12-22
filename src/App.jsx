@@ -16,9 +16,11 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState("")
   const [currentMovie, setCurrentMovie] = useState(null)
   const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(null)
 
 
   const fetchMovies = async (query) => {
+    setLoading(true)
     try {
       const url = query
       ? `${API_BASE_URL}/getMovies?query=${encodeURIComponent(query)}`
@@ -47,6 +49,8 @@ const App = () => {
       } else {
         setErrorMessage("Error loading movies!");
       }
+    } finally {
+      setLoading(false)
     }
   }
   const handleSearch = (query) => {
@@ -151,6 +155,9 @@ const App = () => {
 
       <section className="body-content">
         <div className="error-message">{errorMessage? <p style={{ color: 'grey'}}>{errorMessage}</p> : null}</div>
+        {loading && <div className="spinner-container">
+          <div className="spinner"/>
+          </div>}
         <ul className="movie-list">
           {movies.map((movie, index)=>(
             currentMovie && currentMovie.id === movie.id ? (

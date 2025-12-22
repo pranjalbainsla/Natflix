@@ -563,5 +563,25 @@ section {
   margin-top: 40px;
   font-style: italic;
 }
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 0.25rem solid rgba(255, 255, 255, 0.2);
+  border-top: 0.25rem solid #a855f7;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 
 
