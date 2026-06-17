@@ -1,20 +1,17 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
 import { getFirestore } from 'firebase/firestore';
-
-const firebaseConfig = {
-    apiKey: "AIzaSyAknx-xXrXxxEfK578u51nGIQoYJSeUe3o",
-    authDomain: "natflix-4b40b.firebaseapp.com",
-    projectId: "natflix-4b40b",
-    storageBucket: "natflix-4b40b.firebasestorage.app",
-    messagingSenderId: "883977488474",
-    appId: "1:883977488474:web:172f7cd90fc6c9c3dcf063",
-    measurementId: "G-CV6C9HGLMB"
-};
+import { firebaseConfig, RECAPTCHA_SITE_KEY } from './src/constants/config.js';
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const googleProvider = new GoogleAuthProvider();
 
-export { auth, googleProvider, db };
+if (RECAPTCHA_SITE_KEY) {
+  initializeAppCheck(app, {
+    provider: new ReCaptchaV3Provider(RECAPTCHA_SITE_KEY),
+    isTokenAutoRefreshEnabled: true,
+  });
+}
+
+const db = getFirestore(app);
+
+export { db };

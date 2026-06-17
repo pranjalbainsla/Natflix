@@ -1,0 +1,17 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /movies/{movieId}/comments/{commentId} {
+      allow read: if true;
+
+      allow create: if
+        request.resource.data.keys().hasOnly(['text', 'userName', 'createdAt'])
+        && request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 500
+        && request.resource.data.userName == 'Anonymous';
+
+      allow update, delete: if false;
+    }
+  }
+}

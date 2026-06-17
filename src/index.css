@@ -9,32 +9,11 @@
 body {
   margin: 0;
   min-height: 100vh;
-}
-
-/* Background for main app (after login): tile vertically, width = viewport width */
-body.app-bg {
   background-image: url('/images/bg5.jpeg');
-  background-size: 100% auto;      /* image spans full viewport width */
+  background-size: 100% auto;
   background-position: top center;
-  background-repeat: repeat-y;     /* repeat as we scroll down */
+  background-repeat: repeat-y;
   background-color: black;
-}
-body.login-bg {
-  background-image: url('/images/bg5.jpeg');
-  background-size: 100% auto;      /* image spans full viewport width */
-  background-position: top center;
-  background-repeat: repeat-y;     /* repeat as we scroll down */
-  background-color: black;
-}
-/* Background for login page: single hero image, no repeat */
-@media (max-width: 450px) {
-  body.login-bg {
-    background-image: url('/images/bg5.jpeg');
-    background-size: cover;          /* fills the viewport, keeps aspect ratio */
-    background-position: center;     /* keeps focus */
-    background-repeat: no-repeat;    /* no tiling */
-    background-color: black;
-  }
 }
 
 
@@ -88,7 +67,7 @@ header {
   background-color: rgb(30, 27, 27);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
-.sign-out-button {
+.header-button {
   padding: clamp(0.5rem, 1.5vh, 0.625rem) clamp(1rem, 2vw, 1.25rem);
   background-color: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -103,13 +82,13 @@ header {
   white-space: nowrap;
 }
 
-.sign-out-button:hover {
+.header-button:hover {
   background-color: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
 }
 
-.sign-out-button:active {
+.header-button:active {
   transform: translateY(0);
 }
 .purple-gradient {
@@ -372,20 +351,17 @@ section {
   margin-bottom: 10px;
 }
 
-.comment-item.user-comment {
-  background-color: rgba(108, 108, 177, 0.3);
-  border: 1px solid rgba(108, 108, 177, 0.4);
-  text-align: right;
-}
-
 .comment-header {
   display: flex;
   align-items: center;
   gap: 8px;
   margin-bottom: 6px;
 }
-.comment-header.user-author {
-  justify-content: flex-end;
+
+.comment-error {
+  color: #f87171;
+  font-size: 0.85rem;
+  margin-bottom: 8px;
 }
 
 .comment-author {
@@ -464,92 +440,6 @@ section {
   stroke: currentColor;
 }
 
-/* Login Page Styles */
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-}
-
-.login-box {
-  background-color: rgba(39, 38, 38, 0.9);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 40px 30px;
-  text-align: center;
-  max-width: 380px;
-  width: 100%;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-}
-
-.login-title {
-  font-size: 2.25rem;
-  font-weight: 700;
-  margin-bottom: 12px;
-  color: white;
-}
-
-.login-subtitle {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 30px;
-  line-height: 1.5;
-}
-
-.google-sign-in-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  padding: 12px 20px;
-  background-color: white;
-  color: black;
-  border: none;
-  border-radius: 22px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-family: "Montserrat", sans-serif;
-  
-}
-
-.google-sign-in-button:hover:not(:disabled) {
-  background-color: #f5f5f5;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.google-sign-in-button:active:not(:disabled) {
-  transform: translateY(0);
-}
-
-.google-sign-in-button:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.google-icon {
-  flex-shrink: 0;
-}
-
-/* Loading Spinner */
-.loading-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-.loading-spinner {
-  color: white;
-  font-size: 18px;
-  font-weight: 500;
-}
 .body-content {
   display: flex;
   flex-direction: column;
